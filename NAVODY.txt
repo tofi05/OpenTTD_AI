@@ -1,0 +1,11 @@
+
+
+
+Zakladni navody na zacatek
+==========================
+https://wiki.openttd.org/AI:Introduction
+
+
+API Dokumentace 
+===============
+http://noai.openttd.org/docs/1.6.1/
