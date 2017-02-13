@@ -8,11 +8,12 @@ class Robot extends AIController {
 
 function Robot::Start() {
 	local i = 1;
-	while (!AICompany.SetName("Roboticka spolecnost #" + i)){
+	while (!AICompany.SetName("Roboticka spolecnost " + i)){
 		i = i + 1;
 	}
+	AILog.Info("Vznikla Roboticka spolecnost #" + i);
 	while (true) {
-    	AILog.Info("I am a very new AI with a ticker called MyNewAI and I am at tick " + this.GetTick());
+    	AILog.Info("Vypisuju tiky " + this.GetTick());
     	this.Sleep(50);
   	}
 }

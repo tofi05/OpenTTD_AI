@@ -1,9 +1,11 @@
 
 
 
+
 Zakladni navody na zacatek
 ==========================
 https://wiki.openttd.org/AI:Introduction
+https://akela.mendelu.cz/~xpopelka/cs/ui/openttd-ai/
 
 
 API Dokumentace 
