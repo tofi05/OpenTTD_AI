@@ -7,7 +7,10 @@ class Robot extends AIController {
 }
 
 function Robot::Start() {
-	AICompany.SetName("Roboticka spolecnost");
+	local i = 1;
+	while (!AICompany.SetName("Roboticka spolecnost #" + i)){
+		i = i + 1;
+	}
 	while (true) {
     	AILog.Info("I am a very new AI with a ticker called MyNewAI and I am at tick " + this.GetTick());
     	this.Sleep(50);
