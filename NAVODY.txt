@@ -1,5 +1,12 @@
 
 
+Squirrel programovaci jazyk
+===========================
+http://www.squirrel-lang.org/
+
+dokumentace
+http://www.squirrel-lang.org/squirreldoc/reference/index.html
+
 
 
 Zakladni navody na zacatek
