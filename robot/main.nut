@@ -2,6 +2,8 @@ import("pathfinder.road", "RoadPathFinder", 3);
 
 class Robot extends AIController {
 		function Start();
+		function vyberMesta();
+		function postavCestu(townid_a, townid_b);
 //		function Save();
 //		function Load(version, data);
 }
@@ -11,9 +13,28 @@ function Robot::Start() {
 	while (!AICompany.SetName("Roboticka spolecnost " + i)){
 		i = i + 1;
 	}
+	AILog.Info("Vznikla Roboticka spolecnost #" + i);
 	
 	
 	
+	
+	
+	local mesta = vyberMesta();
+	postavCestu(mesta[0], mesta[1]);
+	
+	
+	
+	
+	
+	
+	while (true) {
+			AILog.Info("Vypisuju tiky " + this.GetTick());
+			this.Sleep(50);
+		}
+}
+
+function Robot::vyberMesta(){
+	local mesta = array(2);
 	
 	/* Get a list of all towns on the map. */
 	local townlist = AITownList();
@@ -23,8 +44,15 @@ function Robot::Start() {
 	townlist.Sort(AIAbstractList.SORT_BY_VALUE, false);
 
 	/* Pick the two towns with the highest population. */
-	local townid_a = townlist.Begin();
-	local townid_b = townlist.Next();
+	mesta[0] = townlist.Begin();
+	mesta[1] = townlist.Next();
+	
+	return mesta;
+}
+
+
+
+function Robot::postavCestu(townid_a, townid_b){
 
 	/* Print the names of the towns we'll try to connect. */
 	AILog.Info("Going to connect " + AITown.GetName(townid_a) + " to " + AITown.GetName(townid_b));
@@ -86,16 +114,11 @@ function Robot::Start() {
 		path = par;
 	}
 	AILog.Info("Done");
-	
-	
-	
-	
-	AILog.Info("Vznikla Roboticka spolecnost #" + i);
-	while (true) {
-			AILog.Info("Vypisuju tiky " + this.GetTick());
-			this.Sleep(50);
-		}
+
 }
+
+
+
 /*
 function Robot::Save()
 {
@@ -104,5 +127,6 @@ function Robot::Save()
 
 function Robot::Load(version, data)
 {
+
 }
 */
