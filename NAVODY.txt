@@ -15,6 +15,6 @@ https://wiki.openttd.org/AI:Introduction
 https://akela.mendelu.cz/~xpopelka/cs/ui/openttd-ai/
 
 
-API Dokumentace 
-===============
+API Dokumentace open ttd
+========================
 http://noai.openttd.org/docs/1.6.1/

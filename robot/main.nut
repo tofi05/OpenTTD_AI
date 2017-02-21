@@ -2,8 +2,9 @@ import("pathfinder.road", "RoadPathFinder", 3);
 
 class Robot extends AIController {
 		function Start();
-		function vyberMesta();
+		function getTownListSorteBy(order);
 		function postavCestu(townid_a, townid_b);
+		function getClosesTown(townSite, newTown);
 //		function Save();
 //		function Load(version, data);
 }
@@ -15,12 +16,24 @@ function Robot::Start() {
 	}
 	AILog.Info("Vznikla Roboticka spolecnost #" + i);
 	
+	local townSite = AITownList();
+	townSite.Clear();
+	local sortedTownList = getTownListSorteBy(AITown.GetPopulation);
+	
+	local mestoA = sortedTownList.Begin();
+	
+	while(!sortedTownList.IsEnd()){
+		townSite.AddItem(mestoA, sortedTownList.GetValue(mestoA))
+		mestoA = sortedTownList.Next();
+		local mestoB = getClosesTown(townSite, mestoA);
+		postavCestu(mestoA, mestoB);
+		AILog.Info("Vypisuju tiky " + this.GetTick());
+		this.Sleep(50);
+	} 
 	
 	
 	
-	
-	local mesta = vyberMesta();
-	postavCestu(mesta[0], mesta[1]);
+	//postavCestu(mesta[0], mesta[1]);
 	
 	
 	
@@ -33,21 +46,31 @@ function Robot::Start() {
 		}
 }
 
-function Robot::vyberMesta(){
-	local mesta = array(2);
+function Robot::getClosesTown(townSite, newTown){
+	local townX = townSite.Begin();
+	local actualTown = townX;
+	local distance = 100000; 
+	while(!townSite.IsEnd()){
+		local aktualDistance = AIMap.DistanceSquare(actualTown,newTown);
+		if(distance>aktualDistance){
+			townX = actualTown;
+			distance = aktualDistance;
+		}
+		actualTown = townSite.Next();
+	}
+	return townX;	
+}
+
+function Robot::getTownListSorteBy(order){
 	
 	/* Get a list of all towns on the map. */
 	local townlist = AITownList();
 
 	/* Sort the list by population, highest population first. */
-	townlist.Valuate(AITown.GetPopulation);
+	townlist.Valuate(order);
 	townlist.Sort(AIAbstractList.SORT_BY_VALUE, false);
-
-	/* Pick the two towns with the highest population. */
-	mesta[0] = townlist.Begin();
-	mesta[1] = townlist.Next();
 	
-	return mesta;
+	return townlist;
 }
 
 
