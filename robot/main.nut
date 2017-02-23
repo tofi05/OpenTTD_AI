@@ -1,9 +1,12 @@
 import("pathfinder.road", "RoadPathFinder", 3);
+import("pathfinder.rail", "RailPathFinder", 1);
+
 
 class Robot extends AIController {
 		function Start();
 		function getTownListSorteBy(order);
 		function postavCestu(townid_a, townid_b);
+		function postavKoleje(townid_a, townid_b);
 		function getClosesTown(townSite, newTown);
 //		function Save();
 //		function Load(version, data);
@@ -27,8 +30,8 @@ function Robot::Start() {
 		mestoA = sortedTownList.Next();
 		local mestoB = getClosesTown(townSite, mestoA);
 		postavCestu(mestoA, mestoB);
-		AILog.Info("Vypisuju tiky " + this.GetTick());
-		this.Sleep(50);
+//		AILog.Info("Vypisuju tiky " + this.GetTick());
+//		this.Sleep(50);
 	} 
 	
 	
@@ -50,14 +53,19 @@ function Robot::getClosesTown(townSite, newTown){
 	local townX = townSite.Begin();
 	local actualTown = townX;
 	local distance = 100000; 
+	local townlist = AITownList();
 	while(!townSite.IsEnd()){
-		local aktualDistance = AIMap.DistanceSquare(actualTown,newTown);
+		local name = AITown.GetName(actualTown);
+		local aktualDistance = AIMap.DistanceManhattan(AITown.GetLocation(actualTown), AITown.GetLocation(newTown));
+		AILog.Info(aktualDistance);
 		if(distance>aktualDistance){
 			townX = actualTown;
 			distance = aktualDistance;
+			AILog.Info("vylepsena vzdalenost " + distance);
 		}
 		actualTown = townSite.Next();
 	}
+	AILog.Info("nalezena vzdalenost " + distance);
 	return townX;	
 }
 
@@ -74,8 +82,14 @@ function Robot::getTownListSorteBy(order){
 }
 
 
+function Robot::postavKoleje(townid_a, townid_b){
+	local pathfinder = RailPathFinder();
+	
+}
+
 
 function Robot::postavCestu(townid_a, townid_b){
+
 
 	/* Print the names of the towns we'll try to connect. */
 	AILog.Info("Going to connect " + AITown.GetName(townid_a) + " to " + AITown.GetName(townid_b));
