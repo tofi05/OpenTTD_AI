@@ -69,3 +69,34 @@ function Robot::postavKoleje(townid_a, townid_b){
 	
 }
 
+
+function Robot::postavZaleznicniStanici(twonId){
+
+	local loc = AITown.GetLocation(twonId);
+	local jeMoznaPostavit = false;
+	local locaX = AIMap.GetTileX(loc);
+	local locaY = AIMap.GetTileY(loc);
+	while(!jeMoznaPostavit){
+		AILog.Info("hledam misto pro zeleznicni stanici");
+		local postavit = true;
+		for(local x=locaX;x<locaX+8;x+=1){
+			AILog.Info(x + " a " + locaY);
+			local tileIndex = AIMap.GetTileIndex(x, locaY);
+			if(!AITile.IsBuildable(tileIndex)){
+				AILog.Info("stavitelny");
+				postavit = false;
+			}
+		}
+		if(postavit == true)
+			jeMoznaPostavit = true;
+		else
+			locaX = locaX + 1;
+	}
+	// výbìr typu kolejí - bez tohoto kroku nelze stavìt!
+	AIRail.SetCurrentRailType(AIRailTypeList().Begin());
+
+	// postavíme zastávky - orientace vodorovnì, délka 4, výška 1,
+	// parametry jsou: pozice, orientace, svislý rozmìr, vodorovný rozmìr, nová stanice
+	AIRail.BuildRailStation(AIMap.GetTileIndex(locaX, locaY), AIRail.RAILTRACK_NE_SW, 1, 7, AIStation.STATION_NEW);
+
+}
