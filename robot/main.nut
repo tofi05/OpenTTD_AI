@@ -226,11 +226,6 @@ function Robot::getTownListSorteBy(order){
 }
 
 
-function Robot::postavKoleje(townid_a, townid_b){
-	local pathfinder = RailPathFinder();
-	
-}
-
 
 
 

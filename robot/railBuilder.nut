@@ -64,3 +64,8 @@ function Robot::_directions(self,
 }
 
 
+function Robot::postavKoleje(townid_a, townid_b){
+	local pathfinder = RailPathFinder();
+	
+}
+
