@@ -59,6 +59,7 @@ function Robot::Start() {
 	local sortedTownList = getTownListSorteBy(AITown.GetPopulation);
 	
 	local mestoA = sortedTownList.Begin();
+	postavZaleznicniStanici(mestoA);
 	
 	while(!sortedTownList.IsEnd()){
 		townSite.AddItem(mestoA, sortedTownList.GetValue(mestoA))
